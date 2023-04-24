@@ -1,0 +1,361 @@
+{
+	"info": {
+		"_postman_id": "8c8c0484-f8fc-47f1-a7db-19f0fbf9ef95",
+		"name": "restful booker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6672fdd8-7090-4b1f-861f-2a6a8a79528c",
+						"exec": [
+							"var JsonData = pm.response.json();\r",
+							"var token = JsonData.token\r",
+							"\r",
+							"pm.environment.set(\"token\",token);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "413ee461-6ffe-42a9-8220-eb6c019ef597",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\" : \"admin\",\n    \"password\" : \"password123\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": "{{url}}/auth"
+			},
+			"response": []
+		},
+		{
+			"name": "geting all IDs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "09f8615f-3fc3-475c-96b7-05fdbfb0a1f3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "c8e4087d-64a2-4d7a-9171-ab7938c23eb9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/booking"
+			},
+			"response": []
+		},
+		{
+			"name": "create new booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "25f9299e-f90c-4ca0-87ce-1cf9ed8235cf",
+						"exec": [
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.booking.firstname).to.eql(\"mahmoud\");\r",
+							"});\r",
+							"\r",
+							"    \r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"var bookingID = jsonData.bookingid\r",
+							"\r",
+							"pm.environment.set(\"bookingID\", bookingID);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "65a57cc3-ef03-4bbd-9347-694ebd7e7b0e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\" : \"mahmoud\",\r\n    \"lastname\" : \"khedewy\",\r\n    \"totalprice\" : 111,\r\n    \"depositpaid\" : true,\r\n    \"bookingdates\" : {\r\n        \"checkin\" : \"2018-01-01\",\r\n        \"checkout\" : \"2019-01-01\"\r\n    },\r\n    \"additionalneeds\" : \"Breakfast\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{url}}/booking"
+			},
+			"response": []
+		},
+		{
+			"name": "get booking created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "35002691-d4ee-4653-8fec-ab2f602de2d6",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.firstname).to.eql(\"mahmoud\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "e3cac6fb-faa0-415d-94f3-59cdfda266e4",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/booking/{{bookingID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "update booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "53698027-1002-484f-b510-0ea485249f71",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.firstname).to.eql(\"Mohamed\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "338d2ccf-af58-4e2b-8029-e1cd6a8ab6c2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "token=abc123"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\" : \"Mohamed\",\n    \"lastname\" : \"khedewy\",\n    \"totalprice\" : 111,\n    \"depositpaid\" : true,\n    \"bookingdates\" : {\n        \"checkin\" : \"2018-01-01\",\n        \"checkout\" : \"2019-01-01\"\n    },\n    \"additionalneeds\" : \"Breakfast\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": "{{url}}/booking/{{bookingID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "get updated booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3134600b-ec9e-4492-9c00-c31edb20bfe9",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.firstname).to.eql(\"Mohamed\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "5cf85323-5459-41e0-8ec4-964cd38299d2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/booking/{{bookingID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "delete booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a548677b-1574-4d10-97ef-36db2e79e2bc",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "e7436c0b-7029-494b-9060-f1d21099dde5",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "token=abc123"
+					}
+				],
+				"url": "{{url}}/booking/{{bookingID}}"
+			},
+			"response": []
+		},
+		{
+			"name": "check that booking deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fe7bce99-66a3-41ac-9bba-cfbeb85be855",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"_postman_id": "0b099291-7a67-4348-b582-5c6006f009db",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{url}}/booking/{{bookingID}}"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": {
+			"password": "password123",
+			"username": "admin"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "64d454cc-7a1f-4c1d-a071-09222817338d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "421498d0-23b6-4880-90d5-bef75b9eeba6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
